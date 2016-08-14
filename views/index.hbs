@@ -1,0 +1,52 @@
+{{#extend "stylesheets"}}
+    <link rel="stylesheet" href="./stylesheets/index.css"/>
+{{/extend}}
+
+<header>header</header>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Dsipay Page</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li>
+            <a href="#">Link</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="list-container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each members}}
+            <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{name}}</td>
+            <td>{{group}}</td>
+            <td>{{age}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</section>
+
+{{#extend "scripts"}}
+    <script>
+        
+    </script>
+{{/extend}}
