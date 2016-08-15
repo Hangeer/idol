@@ -7,10 +7,15 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       primaryKey: true
     },
-    name: DataTypes.STRING,
-    gender: DataTypes.STRING,
+    name_jp: DataTypes.STRING,
+    name_cn: DataTypes.STRING,
+    name_en: DataTypes.STRING,
     group: DataTypes.STRING,
-    age: DataTypes.STRING
+    birth: DataTypes.STRING,
+    constellation: DataTypes.STRING,
+    height: DataTypes.STRING,
+    birthplace: DataTypes.STRING,
+    blood: DataTypes.STRING
   }, {
     classMethods: {
       
