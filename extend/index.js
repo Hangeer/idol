@@ -9,7 +9,7 @@ let site_url = `http://www.keyakizaka46.com/mob/arti/artiShw.php?site=k46o&ima=1
 let img_url = `http://www.keyakizaka46.com/img/14/orig/k46o/201/607/201607-${num}__400_320_102400_jpg.jpg`;
 let arr = [];
 let promise_arr = [];
-let max_num = 40;
+let max_num = 35;
 /**
  *  num 计数器 用来记录当前的 member
  *  site_url 网站 URL
@@ -18,6 +18,26 @@ let max_num = 40;
  *  promise_arr 用来存 promise 数组
  *  max_num 循环次数
  */
+
+ let connection = mysql.createConnection({
+     host: 'localhost',
+     port: '1469',
+     user: 'root',
+     password: 'fuck',
+     database: 'chat'
+ });
+ connection.connect((err) => {
+     if (err) {
+         console.error('error connecting: ' + err.stack);
+         return;
+     }
+ });
+ connection.query('TRUNCATE  TABLE Members', (err) => {
+     if (err) {
+         throw err;
+     }
+     console.log('Empty table');
+ });
 
 function getData (site_url, img_url) {
     return new Promise ((resolve, reject) => {
@@ -35,7 +55,14 @@ function getData (site_url, img_url) {
                     data.height = $('.box-info dl dt')[2].children[0].data.trim();
                     data.birthplace = $('.box-info dl dt')[3].children[0].data.trim();
                     data.blood = $('.box-info dl dt')[4].children[0].data.trim();
-                    arr.push(data);
+                    
+                    let query = 'INSERT INTO Members SET ?';
+                    connection.query(query, data, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log('insert success');
+                    });
 
                     getImg (img_url, 
                         `${data.name_jp}.jpg`, 
@@ -75,41 +102,8 @@ for (let i = 1; i <= max_num; i ++) {
 }
 
 let p_all = Promise.all(promise_arr).then((err) => {
-    // console.log('all');
-    writeData(arr);
+    console.log(promise_arr);
 });
-
-function writeData (arr) {
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        port: '1469',
-        user: 'root',
-        password: 'fuck',
-        database: 'chat'
-    });
-    connection.connect((err) => {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
-    });
-    connection.query('TRUNCATE  TABLE Members', (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log('Empty table');
-    });
-
-    arr.forEach((item, index) => {
-        let query = 'INSERT INTO Members SET ?';
-        connection.query(query, item, (err) => {
-            if (err) {
-                throw err;
-            }
-            console.log('insert success');
-        });
-    });
-}
 
 // connection.end((err) => {
 //     if (err) {
