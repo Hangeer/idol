@@ -5,8 +5,8 @@ const request = require('request');
 const mysql = require('mysql');
 
 let num = ``;
-let site_url = `http://www.keyakizaka46.com/mob/arti/artiShw.php?site=k46o&ima=1131&cd=${num}`;
-let img_url = `http://www.keyakizaka46.com/img/14/orig/k46o/201/607/201607-${num}__400_320_102400_jpg.jpg`;
+let site_url = ``;
+let img_url = ``;
 let arr = [];
 let promise_arr = [];
 let max_num = 35;
@@ -36,15 +36,18 @@ let max_num = 35;
      if (err) {
          throw err;
      }
-     console.log('Empty table');
+     console.log('Clear table');
  });
+ /**
+  *  连接 mysql
+  */
 
 function getData (site_url, img_url) {
     return new Promise ((resolve, reject) => {
             request(site_url, (err, res, body) => {
             if (!err && res.statusCode == 200) {
                 $ = cheerio.load(body);
-                if (!!($('p.furigana').text().trim().length)) {   
+                if (($('p.furigana').text().trim().length) > 0) {   
                     let data = {};   
                     data.name_jp = $('p.furigana').text().trim();
                     data.name_cn = $('p.name').text().trim();
@@ -65,7 +68,7 @@ function getData (site_url, img_url) {
                     });
 
                     getImg (img_url, 
-                        `${data.name_jp}.jpg`, 
+                        `${data.name_cn}.jpg`, 
                         path.resolve(__dirname, "../public", 
                         "images", 
                         "keyakizaka46"), 
@@ -73,12 +76,11 @@ function getData (site_url, img_url) {
                             if (err) {
                                 throw err;
                             } else {
-                                console.log(`Member ${data.name_jp} file && img get`);
+                                console.log(`Member ${data.name_cn} file && img get`);
                             }
                         });
-
-                    resolve();
                 }
+                resolve();
             }
         });
     });
@@ -99,15 +101,19 @@ for (let i = 1; i <= max_num; i ++) {
             img_url = `http://www.keyakizaka46.com/img/14/orig/k46o/201/607/201607-${num}__400_320_102400_jpg.jpg`;
 
             promise_arr.push(getData(site_url, img_url));
+            console.log(`length: ${promise_arr.length}`);
 }
 
-let p_all = Promise.all(promise_arr).then((err) => {
-    console.log(promise_arr);
+Promise.all(promise_arr).then((err) => {
+    connection.end((err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('Members data write complete');
+    });
+    /**
+     *  成员信息和图片获取到之后
+     *  再执行后续操作 （此处是关闭数据库连接）
+     */
 });
 
-// connection.end((err) => {
-//     if (err) {
-//         throw err;
-//     }
-//     console.log('Members data write complete');
-// });
