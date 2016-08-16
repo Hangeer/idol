@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="./stylesheets/index.css"/>
 {{/extend}}
 
-<header>header</header>
+<header>Test project for patching 46G member files</header>
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -27,18 +27,30 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Name(read)</th>
+            <th>Name(jp)</th>
+            <th>Name(en)</th>
             <th>Group</th>
-            <th>Age</th>
+            <th>Birthday</th>
+            <th>Constellation</th>
+            <th>height</th>
+            <th>Birthplace</th>
+            <th>Blood</th>
           </tr>
         </thead>
         <tbody>
           {{#each members}}
             <tr>
             <th scope="row">{{id}}</th>
-            <td>{{name}}</td>
+            <td>{{name_jp}}</td>
+            <td>{{name_cn}}</td>
+            <td>{{name_en}}</td>
             <td>{{group}}</td>
-            <td>{{age}}</td>
+            <td>{{birth}}</td>
+            <td>{{constellation}}</td>
+            <td>{{height}}</td>
+            <td>{{birthplace}}</td>
+            <td>{{blood}}</td>
           </tr>
           {{/each}}
         </tbody>

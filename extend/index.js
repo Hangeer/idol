@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 const cheerio = require('cheerio');
 const request = require('request');
 const mysql = require('mysql');
@@ -87,9 +88,21 @@ function getData (site_url, img_url) {
 }
 
 function getImg (img_url, filename, pathname, callback) {
-    request(img_url)
-        .pipe(fs.createWriteStream(pathname + '/' + filename))
-        .on('close', callback);
+    // request(img_url)
+    //     .pipe(fs.createWriteStream(pathname + '/' + filename))
+    //     .on('close', callback);
+    //     
+
+    http.get(img_url, (res) => {
+        let img_data = '';
+        res.setEncoding("binary");
+            res.on("data", function(chunk) {
+                img_data += chunk;
+            });
+            res.on('end', () => {
+                fs.writeFile(`${pathname}/${filename}`, img_data, 'binary', callback);
+            });
+    });
 }
 
 for (let i = 1; i <= max_num; i ++) {
