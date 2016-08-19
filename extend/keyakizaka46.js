@@ -4,7 +4,6 @@ const http = require('http');
 const cheerio = require('cheerio');
 const request = require('request');
 const mysql = require('mysql');
-var config    = require(path.join(__dirname, '..', 'config', 'config.json'));
 
 let num = ``;
 let site_url = ``;
@@ -22,11 +21,11 @@ let max_num = 35;
  */
 
  let connection = mysql.createConnection({
-     host: config.host,
-     port: config.port,
-     user: config.username,
-     password: config.password,
-     database: config.database
+     host: 'localhost',
+     port: '1469',
+     user: 'root',
+     password: 'fuck',
+     database: 'chat'
  });
  connection.connect((err) => {
      if (err) {
