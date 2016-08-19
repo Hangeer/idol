@@ -7,21 +7,23 @@
 const path = require('path');
 const fs = require('fs');
 const Sequelize = require('sequelize');
+var config    = require(path.join(__dirname, '..', 'config', 'config.json'));
 
-let db = {}
+let db = {};
 
-let sequelize = new Sequelize(
-    'chat',     //  数据库名
-    'root',     //  用户名
-    'fuck',     //  passworld
-    {
-        'dialect': 'mysql',     //  数据库类型
-        'host': 'localhost',    //  数据库 host
-        'port': 1469,           //  端口
-        'define': {
-            'underscored': true
-        }
-    });
+//let sequelize = new Sequelize(
+//    'chat',     //  数据库名
+//    'root',     //  用户名
+//    'fuck',     //  passworld
+//    {
+//        'dialect': 'mysql',     //  数据库类型
+//        'host': 'localhost',    //  数据库 host
+//        'port': 1469,           //  端口
+//        'define': {
+//            'underscored': true
+//        }
+//    });
+let sequelize = new Sequelize(config.database, config.username, config.password, config);
 /**
  *  db 暴露出的模块对象
  *  sequelize 创建一个对象，config 如上

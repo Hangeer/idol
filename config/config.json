@@ -1,0 +1,11 @@
+{
+  "database": "chat",     //  数据库名
+  "username": "root",     //  用户名
+  "password": "fuck",     //  password
+  "dialect": "mysql",     //  数据库类型
+  "host": "localhost",    //  数据库 host
+  "port": 1469,           //  端口
+  "define": {
+    "underscored": true
+  }
+}

@@ -32,12 +32,7 @@ let max_num = 35;
          console.error('error connecting: ' + err.stack);
          return;
      }
- });
- connection.query('TRUNCATE  TABLE Members', (err) => {
-     if (err) {
-         throw err;
-     }
-     console.log('Clear table');
+     console.log("Database connect success");
  });
  /**
   *  连接 mysql
@@ -59,14 +54,8 @@ function getData (site_url, img_url) {
                     data.height = $('.box-info dl dt')[2].children[0].data.trim();
                     data.birthplace = $('.box-info dl dt')[3].children[0].data.trim();
                     data.blood = $('.box-info dl dt')[4].children[0].data.trim();
-                    
-                    let query = 'INSERT INTO Members SET ?';
-                    connection.query(query, data, (err) => {
-                        if (err) {
-                            throw err;
-                        }
-                        console.log('insert success');
-                    });
+
+                    arr.push(data);
 
                     getImg (img_url, 
                         `${data.name_cn}.jpg`, 
@@ -88,10 +77,12 @@ function getData (site_url, img_url) {
 }
 
 function getImg (img_url, filename, pathname, callback) {
-    // request(img_url)
-    //     .pipe(fs.createWriteStream(pathname + '/' + filename))
-    //     .on('close', callback);
-    //     
+    /**
+     request(img_url)
+         .pipe(fs.createWriteStream(pathname + '/' + filename))
+         .on('close', callback);
+    */
+    //  使用 pipe 会出问题
 
     http.get(img_url, (res) => {
         let img_data = '';
@@ -114,15 +105,33 @@ for (let i = 1; i <= max_num; i ++) {
             img_url = `http://www.keyakizaka46.com/img/14/orig/k46o/201/607/201607-${num}__400_320_102400_jpg.jpg`;
 
             promise_arr.push(getData(site_url, img_url));
-            console.log(`length: ${promise_arr.length}`);
 }
 
 Promise.all(promise_arr).then((err) => {
+    connection.query('TRUNCATE TABLE Members', (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('Clear table');
+    });
+    arr.forEach((item, index) => {
+        let query = 'INSERT INTO Members SET ?';
+        connection.query(query, item, (err) => {
+            if (err) {
+                throw err;
+            }
+            console.log(`insert ${index} data success`);
+        });
+    });
+}).then((err) => {
+    if (err) {
+        console.log(err);
+    }
     connection.end((err) => {
         if (err) {
             throw err;
         }
-        console.log('Members data write complete');
+        console.log('Write data complete');
     });
     /**
      *  成员信息和图片获取到之后
