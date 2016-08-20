@@ -108,14 +108,14 @@ for (let i = 1; i <= max_num; i ++) {
 }
 
 Promise.all(promise_arr).then((err) => {
-    connection.query('TRUNCATE TABLE Members', (err) => {
+    connection.query('TRUNCATE TABLE Keyakizakas', (err) => {
         if (err) {
             throw err;
         }
         console.log('Clear table');
     });
     arr.forEach((item, index) => {
-        let query = 'INSERT INTO Members SET ?';
+        let query = 'INSERT INTO Keyakizakas SET ?';
         connection.query(query, item, (err) => {
             if (err) {
                 throw err;
