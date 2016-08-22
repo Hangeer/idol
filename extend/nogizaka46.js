@@ -59,6 +59,9 @@ let pro = new Promise ((resolve, reject) => {
     
 }).then((arr) => {
     console.log(arr);
+    console.log(233);
 }).catch((err) => {
     console.log(err);
 });
+
+/*test comment*/
