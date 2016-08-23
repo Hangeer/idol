@@ -22,10 +22,10 @@ let max_num = 35;
 
  let connection = mysql.createConnection({
      host: 'localhost',
-     port: '1469',
+     port: '3306',
      user: 'root',
-     password: 'fuck',
-     database: 'chat'
+     password: 'Taylor13!@#$%',
+     database: 'idol'
  });
  connection.connect((err) => {
      if (err) {
@@ -138,4 +138,3 @@ Promise.all(promise_arr).then((err) => {
      *  再执行后续操作 （此处是关闭数据库连接）
      */
 });
-

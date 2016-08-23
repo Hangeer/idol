@@ -17,9 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         birthplace: DataTypes.STRING,
         blood: DataTypes.STRING
     }, {
-        classMethods: {
-
-        }
+        timestamps: false,
     });
 
     return Keyakizaka;

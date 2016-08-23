@@ -8,7 +8,7 @@ const models = require('../models');
 
 router.get('/', (req, res) => {
 
-  models.Member.findAll().then((data) => {
+  models.Keyakizaka.findAll().then((data) => {
     let members = [];
 
     data.forEach((item, index) => {

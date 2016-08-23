@@ -11,13 +11,13 @@ const Sequelize = require('sequelize');
 let db = {};
 
 let sequelize = new Sequelize(
-    'chat',     //  数据库名
+    'idol',     //  数据库名
     'root',     //  用户名
-    'fuck',     //  passworld
+    'Taylor13!@#$%',     //  passworld
     {
         'dialect': 'mysql',     //  数据库类型
         'host': 'localhost',    //  数据库 host
-        'port': 1469,           //  端口
+        'port': 3306,           //  端口
         'define': {
             'underscored': true
         }

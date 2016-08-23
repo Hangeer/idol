@@ -16,9 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         height: DataTypes.STRING,
         status: DataTypes.STRING
     }, {
-        classMethods: {
-
-        }
+        timestamps: false,
     });
 
     return  Nogizaka;
